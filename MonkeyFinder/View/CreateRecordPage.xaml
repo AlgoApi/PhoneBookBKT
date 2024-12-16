@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MonkeyFinder.View.CreateRecordPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodel="clr-namespace:MonkeyFinder.ViewModel"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    ios:Page.UseSafeArea="True"
+    Title="Monkeys"
+    x:DataType="viewmodel:CreateRecordViewModel">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <Image HeightRequest="150" WidthRequest="150" Aspect="AspectFit"
+                   Source="{Binding PhotoBase64, Converter={StaticResource Base64ToImageConverter}}"
+                   HorizontalOptions="Center" />
+            <Button Text="Выбрать фото" Command="{Binding SelectPhotoCommand}" />
+
+            <Entry Placeholder="Имя" Text="{Binding Name}" />
+            <Entry Placeholder="Номер телефона" Text="{Binding PhoneNumber}" />
+            <Entry Placeholder="Email" Text="{Binding Email}" />
+            <Entry Placeholder="Группа" Text="{Binding Group}" />
+            <Editor Placeholder="Описание" Text="{Binding Description}" />
+
+            <Button Text="Предварительный результат" Command="{Binding NavigateToSummaryCommand}" Padding="4"/>
+            <Button Text="Сохранить" Command="{Binding SubmitCommand}" Padding="2" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
