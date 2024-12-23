@@ -45,8 +45,8 @@
                 <!-- Add this -->
                 <Label Style="{StaticResource MediumLabel}" Text="{Binding Monkey.phone}" />
                 <Label Style="{StaticResource MediumLabel}" Text="{Binding Monkey.email}" />
-                <Label Style="{StaticResource SmallLabel}" Text="{Binding Monkey.description, StringFormat='Location: {0}'}" />
-                <Label Style="{StaticResource SmallLabel}" Text="{Binding Monkey.group, StringFormat='Population: {0}'}" />
+                <Label Style="{StaticResource SmallLabel}" Text="{Binding Monkey.description, StringFormat='{0}'}" />
+                <Label Style="{StaticResource SmallLabel}" Text="{Binding Monkey.group, StringFormat='{0}'}" />
             </VerticalStackLayout>
         </Grid>
     </ScrollView>

@@ -13,6 +13,7 @@ public class Monkey
 
     public string user { get; set; }
 
+    public string id { get; set; }
 
     public string userId { get; set; } = "1";
 }

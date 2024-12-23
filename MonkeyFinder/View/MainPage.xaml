@@ -7,7 +7,7 @@
     xmlns:viewmodel="clr-namespace:MonkeyFinder.ViewModel"
     xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
     ios:Page.UseSafeArea="True"
-    Title="Monkeys"
+    Title="Книга контактов"
     x:DataType="viewmodel:MonkeysViewModel">
     <Grid
         ColumnDefinitions="*,*"
@@ -16,18 +16,19 @@
         RowSpacing="0"
         BackgroundColor="{AppThemeBinding Light={StaticResource LightBackground}, Dark={StaticResource DarkBackground}}">
 
-        <VerticalStackLayout Spacing="15" Padding="20" HorizontalOptions="Fill" Grid.ColumnSpan="2">
+        <Grid Padding="20" HorizontalOptions="Fill" Grid.ColumnSpan="2" RowDefinitions="Auto,*">
 
             <SearchBar 
-            Placeholder="Search by name"
+            Grid.Row="0"
+            Placeholder="Поиск по имени"
             Text="{Binding SearchText, Mode=TwoWay}"
             SearchCommand="{Binding SearchCommand}"
             Margin="10,5"
             VerticalOptions="Center"
-            HorizontalOptions="FillAndExpand" />
+            HorizontalOptions="FillAndExpand"/>
 
             <RefreshView
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.ColumnSpan="2"
             Command="{Binding GetMonkeysCommand}"
             IsRefreshing="{Binding IsRefreshing}">
@@ -61,10 +62,10 @@
                                             <Label Style="{StaticResource LargeLabel}" Text="{Binding name}" />
                                             <Label Style="{StaticResource MediumLabel}" Text="{Binding phone}" />
                                         </VerticalStackLayout>
-                                        <Button Text="Delete"
+                                        <Button Text="X"
                                                 Grid.Column="6"
-                                                MaximumHeightRequest="100"
-                                                MaximumWidthRequest="150"
+                                                MaximumHeightRequest="50"
+                                                MaximumWidthRequest="60"
                                                 HorizontalOptions="End"
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MonkeysViewModel}}, x:DataType=viewmodel:MonkeysViewModel, Path=DeleteCommand}"
                                                 CommandParameter="{Binding .}" />
@@ -76,7 +77,7 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
             </RefreshView>
-        </VerticalStackLayout>
+        </Grid>
 
         <Button
             Grid.Row="1"
@@ -85,7 +86,7 @@
             Command="{Binding GetMonkeysCommand}"
             IsEnabled="{Binding IsNotBusy}"
             Style="{StaticResource ButtonOutline}"
-            Text="Get Monkeys" />
+            Text="Получить контакты" />
 
         <!--  Add this  -->
         <Button

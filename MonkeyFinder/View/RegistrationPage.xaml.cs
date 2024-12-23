@@ -7,14 +7,13 @@ using Newtonsoft.Json;
 using Microsoft.Maui.Controls;
 using MonkeyFinder.Services;
 using System.Net.Http.Headers;
-
+using System.Net.Http.Json;
 
 namespace MonkeyFinder.View;
 
 public partial class RegistrationPage : ContentPage
 {
     private const string ServerUrl = "http://176.109.104.102"; // Замените на ваш адрес сервера
-    private static readonly HttpClient HttpClient = new();
     private readonly MonkeyService monkeyService = new();
     public ObservableCollection<Monkey> Monkeys { get; } = new();
 
@@ -23,8 +22,14 @@ public partial class RegistrationPage : ContentPage
 
          // Проверка сохранённых данных
         InitializeComponent();
-        CheckSavedCredentialsAsync();
 
+    }
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+
+        // Автоматический вход при каждом отображении страницы
+        CheckSavedCredentialsAsync();
     }
 
     private async Task CheckSavedCredentialsAsync()
@@ -32,10 +37,10 @@ public partial class RegistrationPage : ContentPage
         try
         {
             // Получаем сохранённые логин и пароль
-            await SecureStorage.SetAsync("session_userid", "ef9e2cba-f98b-4993-a726-b578f19f9bd3");
             var username = await SecureStorage.GetAsync("session_username");
             var password = await SecureStorage.GetAsync("session_password");
             var userui = await SecureStorage.GetAsync("session_userid");
+            var local_monkey = await SecureStorage.GetAsync("local_monkey");
 
             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
@@ -44,11 +49,17 @@ public partial class RegistrationPage : ContentPage
 
                 if (response.Item1)
                 {
+                    var cleanData = JsonConvert.DeserializeObject<string>(response.Item2.ReadAsStringAsync().Result);
+                    await SecureStorage.SetAsync("session_userid", cleanData);
                     // Если авторизация успешна, переходим к главной странице
                     var monkeys = await monkeyService.GetMonkeys(await SecureStorage.GetAsync("session_userid"));
 
                     
                     await DisplayAlert("Успех", "Вы успешно вошли!", "OK");
+
+                    string json = JsonConvert.SerializeObject(monkeys);
+                    await SecureStorage.SetAsync("local_monkey", json);
+
                     if (RegistrationData.CompletionSource != null)
                     {
                         RegistrationData.CompletionSource.TrySetResult(monkeys);
@@ -185,7 +196,12 @@ public partial class RegistrationPage : ContentPage
             await DisplayAlert("Успех", "Вы успешно вошли!", "OK");
             await SecureStorage.SetAsync("session_username", username);
             await SecureStorage.SetAsync("session_password", password);
+            var cleanData = JsonConvert.DeserializeObject<string>(success.Item2.ReadAsStringAsync().Result);
+            await SecureStorage.SetAsync("session_userid", cleanData);
             monkeys = await monkeyService.GetMonkeys(await SecureStorage.GetAsync("session_userid"));
+
+            string json = JsonConvert.SerializeObject(monkeys);
+            await SecureStorage.SetAsync("local_monkey", json);
         }
         else
         {   
@@ -195,7 +211,7 @@ public partial class RegistrationPage : ContentPage
                 // Сохраняем новые данные, если не удалось найти пользователя
                 await SecureStorage.SetAsync("session_username", username);
                 await SecureStorage.SetAsync("session_password", password);
-                var raw_id = await success.Item2.ReadAsStringAsync();
+                var raw_id = await response_reg.Item2.ReadAsStringAsync();
                 var id_user = JsonConvert.DeserializeObject<string>(raw_id);
                 await SecureStorage.SetAsync("session_userid", id_user);
                 await DisplayAlert("Успех", "Вы успешно зарегистрировались!", "OK");

@@ -13,8 +13,8 @@ public class MonkeyService
     List<Model.Monkey> monkeyList;
     public async Task<List<Model.Monkey>> GetMonkeys(string user_id)
     {
-        if (monkeyList?.Count > 0)
-            return monkeyList;
+        //if (monkeyList?.Count > 0)
+        //    return monkeyList;
 
         // Online
         var response = await httpClient.GetAsync($"http://176.109.104.102/api/PhoneBook/{user_id}");
@@ -31,5 +31,20 @@ public class MonkeyService
         monkeyList = JsonSerializer.Deserialize(contents, MonkeyContext.Default.ListMonkey);*/
         
         return monkeyList;
+    }
+
+    public async Task<HttpResponseMessage> DeleteAsync(string phonebook_id)
+    {
+        return await httpClient.DeleteAsync($"http://176.109.104.102/api/PhoneBook/{phonebook_id}");
+    }
+
+    public async Task<HttpResponseMessage> SendContactAsync<T>(T content)
+    {
+        return await httpClient.PostAsJsonAsync("http://176.109.104.102/api/PhoneBook", content);
+    }
+
+    public async Task<HttpResponseMessage> SendPhotoAsync(HttpContent content)
+    {
+        return await httpClient.PostAsync("http://176.109.104.102/api/Photos/upload", content);
     }
 }

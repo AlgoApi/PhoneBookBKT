@@ -2,12 +2,23 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <IsFirstTimeProjectOpen>False</IsFirstTimeProjectOpen>
-    <ActiveDebugProfile>Windows Machine</ActiveDebugProfile>
-    <ActiveDebugFramework>net9.0-windows10.0.19041</ActiveDebugFramework>
+    <ActiveDebugProfile>Подсистема Windows для Android (Android 13.0 — API 33)</ActiveDebugProfile>
+    <ActiveDebugFramework>net9.0-android</ActiveDebugFramework>
     <SelectedPlatformGroup>Emulator</SelectedPlatformGroup>
-    <DefaultDevice>pixel_5_-_api_35</DefaultDevice>
+    <DefaultDevice>Подсистема Windows для Android</DefaultDevice>
+    <Source>C:\Users\AlgoApi\Downloads\photo_2024-02-23_11-41-36.jpg</Source>
+    <SmallTileSource>C:\Users\AlgoApi\Downloads\photo_2024-02-23_11-41-36.jpg</SmallTileSource>
+    <MediumTileSource>C:\Users\AlgoApi\Downloads\photo_2024-02-23_11-41-36.jpg</MediumTileSource>
+    <WideTileSource>C:\Users\AlgoApi\Downloads\photo_2024-02-23_11-41-36.jpg</WideTileSource>
+    <LargeTileSource>C:\Users\AlgoApi\Downloads\photo_2024-02-23_11-41-36.jpg</LargeTileSource>
+    <AppIconSource>C:\Users\AlgoApi\Downloads\photo_2024-02-23_11-41-36.jpg</AppIconSource>
+    <SplashScreenSource>C:\Users\AlgoApi\Downloads\photo_2024-02-23_11-41-36.jpg</SplashScreenSource>
+    <PackageLogoSource>C:\Users\AlgoApi\Downloads\photo_2024-02-23_11-41-36.jpg</PackageLogoSource>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net9.0-android|AnyCPU'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net9.0-android|AnyCPU'">
     <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
@@ -17,5 +28,10 @@
     <MauiXaml Update="View\RegistrationPage.xaml">
       <SubType>Designer</SubType>
     </MauiXaml>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Platforms\Windows\Package.appxmanifest">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
 </Project>

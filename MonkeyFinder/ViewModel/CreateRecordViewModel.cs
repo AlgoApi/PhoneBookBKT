@@ -1,19 +1,20 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using MonkeyFinder.Services;
 
 namespace MonkeyFinder.ViewModel;
 
 public partial class CreateRecordViewModel : BaseViewModel
 {
-    private readonly HttpClient _httpClient;
 
     public Monkey monkey = new();
-    
+
+    private readonly MonkeyService monkeyService = new();
+
 
 
     public CreateRecordViewModel()
     {
-        _httpClient = new HttpClient();
         SelectPhotoCommand = new AsyncRelayCommand(SelectPhotoAsync);
         SubmitCommand = new AsyncRelayCommand(SubmitAsync);
         NavigateToSummaryCommand = new AsyncRelayCommand(NavigateToSummaryAsync);
@@ -88,7 +89,21 @@ public partial class CreateRecordViewModel : BaseViewModel
                 description = Description
             };
 
-            var response = await _httpClient.PostAsJsonAsync("http://176.109.104.102/api/PhoneBook", recordData);
+            var content = new
+            {
+                recordData.user,
+                recordData.photo,
+                recordData.name,
+                recordData.phone,
+                recordData.email,
+                recordData.group,
+                recordData.description,
+                recordData.userId
+            };
+
+            //var response = await _httpClient.PostAsJsonAsync("http://176.109.104.102/api/PhoneBook", content);
+
+            var response = await monkeyService.SendContactAsync(content);
 
             if (response.IsSuccessStatusCode)
             {
@@ -118,7 +133,8 @@ public partial class CreateRecordViewModel : BaseViewModel
         // Добавляем загруженный файл в MultipartFormDataContent
         multipartFormContent.Add(content, name: "photo", fileName: Path.GetFileName(filePath));
 
-        var response = await _httpClient.PostAsync("http://176.109.104.102/api/Photos/upload", multipartFormContent);
+        //var response = await _httpClient.PostAsync("http://176.109.104.102/api/Photos/upload", multipartFormContent);
+        var response = await monkeyService.SendPhotoAsync(multipartFormContent);
 
         if (!response.IsSuccessStatusCode)
             throw new Exception("Failed to upload photo.");

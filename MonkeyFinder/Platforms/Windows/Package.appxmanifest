@@ -4,16 +4,17 @@
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap rescap">
+  xmlns:uap18="http://schemas.microsoft.com/appx/manifest/uap/windows10/18"
+  IgnorableNamespaces="uap rescap uap18">
 
-  <Identity Name="maui-package-name-placeholder" Publisher="CN=User Name" Version="0.0.0.0" />
+  <Identity Name="maui-PHONEBOOK-package" Publisher="CN=AlgoApi" Version="0.0.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="3EAEB303-B8C2-446D-89AB-3A1868608FBE" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>$placeholder$</DisplayName>
+    <DisplayName>PhoneBook</DisplayName>
     <PublisherDisplayName>User Name</PublisherDisplayName>
-    <Logo>$placeholder$.png</Logo>
+    <Logo>icons\baza.png</Logo>
   </Properties>
 
   <Dependencies>
@@ -26,22 +27,32 @@
   </Resources>
 
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$" uap18:RuntimeBehavior="windowsApp">
       <uap:VisualElements
-        DisplayName="$placeholder$"
+        DisplayName="PhoneBook"
         Description="$placeholder$"
-        Square150x150Logo="$placeholder$.png"
-        Square44x44Logo="$placeholder$.png"
+        Square150x150Logo="icons\baza.png"
+        Square44x44Logo="icons\baza.png"
         BackgroundColor="transparent">
-        <uap:DefaultTile Square71x71Logo="$placeholder$.png" Wide310x150Logo="$placeholder$.png" Square310x310Logo="$placeholder$.png" />
-        <uap:SplashScreen Image="$placeholder$.png" />
+        <uap:DefaultTile Square71x71Logo="icons\baza.png" Wide310x150Logo="icons\baza.png" Square310x310Logo="icons\baza.png"  ShortName="IconApp">
+        </uap:DefaultTile >
+        <uap:SplashScreen Image="icons\baza.png" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/>
+          <uap:Rotation Preference="portrait"/></uap:InitialRotationPreference>
       </uap:VisualElements>
+      <uap:ApplicationContentUriRules>
+        <uap:Rule Type="include" Match="http://176.109.104.102" WindowsRuntimeAccess="all"/>
+      </uap:ApplicationContentUriRules>
     </Application>
   </Applications>
 
   <Capabilities>
     <rescap:Capability Name="runFullTrust" />
     <Capability Name="internetClient"/>
+    <uap:Capability Name="picturesLibrary"/>
+    <Capability Name="internetClientServer"/>
+    <uap:Capability Name="phoneCall"/>
     <DeviceCapability Name="location"/>
   </Capabilities>
 

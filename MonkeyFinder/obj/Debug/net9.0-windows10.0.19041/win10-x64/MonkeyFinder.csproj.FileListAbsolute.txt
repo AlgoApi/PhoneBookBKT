@@ -472,3 +472,4 @@ C:\Users\AlgoApi\source\repos\dotnet-maui-workshop\Finish\MonkeyFinder\obj\Debug
 C:\Users\AlgoApi\source\repos\dotnet-maui-workshop\Finish\MonkeyFinder\obj\Debug\net9.0-windows10.0.19041\win10-x64\qualifiers.txt
 C:\Users\AlgoApi\source\repos\dotnet-maui-workshop\Finish\MonkeyFinder\obj\Debug\net9.0-windows10.0.19041\win10-x64\qualifiers.txt.intermediate
 C:\Users\AlgoApi\source\repos\dotnet-maui-workshop\Finish\MonkeyFinder\obj\Debug\net9.0-windows10.0.19041\win10-x64\MultipleQualifiersPerDimensionFound.txt
+C:\Users\AlgoApi\source\repos\dotnet-maui-workshop\Finish\MonkeyFinder\bin\Debug\net9.0-windows10.0.19041\win10-x64\icons\baza.scale-200.png
